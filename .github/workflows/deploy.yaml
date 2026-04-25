@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v6 
 
       - name: Validar arquivo compose
-        run: docker-compose config -q
+        run: docker compose config -q
 
       # - name: Deploy no servidor
       #   uses: appleboy/ssh-action@master
