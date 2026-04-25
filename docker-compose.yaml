@@ -6,7 +6,7 @@ services:
       image: portainer/portainer-ce:latest
       container_name: portainer
       restart: always
-      command: --admin-password '$$2a$$12$$2dZ5mql5wMhARf1I2CEZkODakk8eEFJME1mJnvX6c0HGiKx.BPi1q'
+      command: --admin-password ${PORTAINER_ADMIN_PASSWORD}
       security_opt:
         - no-new-privileges:true
       volumes:
@@ -14,8 +14,7 @@ services:
         - /var/run/docker.sock:/var/run/docker.sock
         - portainer_data:/data
       ports:
-        - "8000:8000"
-        - "9443:9443"
+        - "${PORTAINER_PORT}:9443"
 
   glpi:
     image: "glpi/glpi:latest"
@@ -60,8 +59,3 @@ volumes:
   data:
   db_data:
   portainer_data:
-
-
-    
-
-    

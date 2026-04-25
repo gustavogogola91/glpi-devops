@@ -1,0 +1,26 @@
+name: Deploy GLPI
+
+on: 
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout de código
+        uses: actions/checkout@v6 
+
+      - name: Validar arquivo compose
+        run: docker-compose config -q
+
+      # - name: Deploy no servidor
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{ secrets.HOST_IP }}
+      #     username: ${{ secrets.SSH_USER }}
+      #     key: ${{ secrets.SSH_KEY }}
+      #     script:
+      #       cd /
+      #       git pull origin main
+      #       docker compose up -d
