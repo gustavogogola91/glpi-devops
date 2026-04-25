@@ -1,0 +1,67 @@
+name: glpi
+
+services:
+
+  portainer:
+      image: portainer/portainer-ce:latest
+      container_name: portainer
+      restart: always
+      command: --admin-password '$$2a$$12$$2dZ5mql5wMhARf1I2CEZkODakk8eEFJME1mJnvX6c0HGiKx.BPi1q'
+      security_opt:
+        - no-new-privileges:true
+      volumes:
+        - /etc/localtime:/etc/localtime:ro
+        - /var/run/docker.sock:/var/run/docker.sock
+        - portainer_data:/data
+      ports:
+        - "8000:8000"
+        - "9443:9443"
+
+  glpi:
+    image: "glpi/glpi:latest"
+    container_name: glpi
+    restart: "always"
+    volumes:
+      - data:/var/glpi
+      - "./glpi/glpi_marketplace:/var/www/glpi/marketplace:rw"
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "80:80"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/index.php"]
+      interval: 1m
+      timeout: 15s
+      retries: 3
+      start_period: 30s
+
+  db:
+    image: "mysql"
+    container_name: db_glpi
+    restart: "always"
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+      MYSQL_DATABASE: ${GLPI_DB_NAME}
+      MYSQL_USER: ${GLPI_DB_USER}
+      MYSQL_PASSWORD: ${GLPI_DB_PASSWORD}
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "$$GLPI_DB_USER", "-p$$GLPI_DB_PASSWORD"]
+      interval: 20s
+      timeout: 15s
+      retries: 3
+      start_period: 30s
+  
+volumes:
+  data:
+  db_data:
+  portainer_data:
+
+
+    
+
+    
