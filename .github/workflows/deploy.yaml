@@ -21,6 +21,6 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script:
-            cd /
+            cd /home/ubuntu/glpi-devops
             git pull origin main
             docker compose up -d
