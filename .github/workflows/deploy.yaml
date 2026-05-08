@@ -19,8 +19,7 @@ jobs:
         with:
           host: ${{ secrets.HOST_IP }}
           username: ${{ secrets.SSH_USER }}
-          key: 
-            from_secret: SSH_KEY
+          key: ${{ secrets.SSH_KEY }}
           script:
             cd /home/ubuntu/glpi-devops
             git pull origin main
