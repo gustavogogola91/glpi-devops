@@ -29,7 +29,7 @@ services:
       db:
         condition: service_healthy
     ports:
-      - "443:80"
+      - "80:80"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/index.php"]
       interval: 1m
