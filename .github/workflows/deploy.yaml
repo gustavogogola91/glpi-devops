@@ -8,7 +8,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    
+
       - name: Checkout de código
         uses: actions/checkout@v6
 
@@ -24,7 +24,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             set -e
-            cd /home/ubuntu/glpi-devops
+            cd /var/www/glpi-devops
             git pull origin main
             docker compose up -d
 
