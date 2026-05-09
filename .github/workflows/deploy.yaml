@@ -27,6 +27,3 @@ jobs:
             cd /var/www/glpi-devops
             git pull origin main
             docker compose up -d
-
-
-
